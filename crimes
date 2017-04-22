@@ -1,0 +1,25 @@
+1. Write a mapreduce/pig program to calculate the number of cases under each FBI code 
+
+Z = load '/home/jayant/Downloads/Crimes_-_2001_to_present.csv' using PigStorage (',') as (ID:int,Case_Number:chararray,Date:chararray,Block:chararray,IUCR:int, Primary_Type:chararray,Description:chararray, Location_Description:chararray,Arrest:chararray,Domestic:chararray,Beat:int,District:int,Ward:int, Community_Area:int,FBICode:int, X_Coordinate:int,Y_Coordinate:int,Year:int,Updated_On:Chararray,Latitude:double,Longitude:double,Location:chararray);
+
+B = group Z by FBICode;
+C = foreach B generate FBICode, COUNT(*);
+
+2.Write a mapreduce/pig program to calculate the number of cases under FBI code 32. 
+
+D= Filter Z by FBICode==32;
+E= foreach D generate COUNT(*);
+
+3. Write a mapreduce/pig program to calculate the number of arrests in theft district wise.
+
+F= Filter A by Primary_Type=='Theft';
+G= Group F by District;
+H= Foreach G Generate District, COUNT(*);
+
+
+4. Write a mapreduce/pig program to calculate the number of arrests between october 2014 and october 2015. 
+
+I= filter A by Updated_On>09/30/2014;
+J= filter I by Updated_On<11/01/2015;
+K= Group J by all;
+L= foreach K generate count(*);
